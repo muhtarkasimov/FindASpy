@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create room</title>
+    <!--    Настройка для правильного отображения в мобильной версии(крупное отображение) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/style.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="../script/createroom.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="container">
+            <h1>Create room</h1>
+        </div>
+
+        <div class="container">
+            <div class="row margins">
+                <div class="col-xs-4" >
+                    <kbd>Players</kbd>
+                </div>
+                <div class="col-xs-2" >
+                    <input type="number" placeholder="3-16">
+                </div>
+            </div>
+            <div class="row margins">
+                <div class="col-xs-4" >
+                    <kbd>Spies</kbd>
+                </div>
+                <div class="col-xs-2" >
+                    <input type="number" placeholder="1-(players/2)">
+                </div>
+            </div>
+            <div class="row margins">
+                <div class="col-xs-4" >
+                    <kbd>Time</kbd>
+                </div>
+                <div class="col-xs-4" >
+                    <select name="select" id="select_id">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
+                    mins
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <br><br>
+            <button type="submit" onclick="createRoom()">Create</button>
+            <br>
+            <button class="margin-ver" onclick="goToRooms()">Back</button>
+        </div>
+
+    </div>
+
+</body>
+</html>
