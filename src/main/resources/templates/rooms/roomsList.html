@@ -20,7 +20,7 @@
     <tbody>
     <tr th:each="room : ${rooms}">
         <td th:text="${room.value.getPlayers().get(0).getNickname()}"></td>
-        <td><a th:href="@{'/rooms/' + ${room.key}}"><span th:text="${room.key}"></span></a></td>
+        <td><a th:href="@{'/' + ${room.key}}"><span th:text="${room.key}"></span></a></td>
         <td th:text="${room.value.getPlayers().size()}"></td>
         <td th:text="${room.value.getMaxPlayersAmount()}"></td>
     </tr>

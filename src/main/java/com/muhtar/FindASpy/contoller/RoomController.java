@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/rooms")
+@RequestMapping("/")
 public class RoomController {
 
     @Autowired
@@ -17,7 +17,7 @@ public class RoomController {
 
     @GetMapping
     public String redirectToRoomsList(Model model) {
-        return "redirect:rooms/roomsList";
+        return "redirect:roomsList";
     }
 
     @GetMapping("/roomsList")
@@ -28,9 +28,9 @@ public class RoomController {
     }
 
     @GetMapping("/{roomId}")
-    public String enterRoom(Model model, @PathVariable(value = "roomId", required = true) String roomId) {
+    public String enterRoom(Model model, @PathVariable String roomId) {
         model.addAttribute("roomId", roomId);
         model.addAttribute("room", roomsPool.getRoomByStringId(roomId));
-        return "rooms/" + roomId;
+        return "rooms/room";
     }
 }
