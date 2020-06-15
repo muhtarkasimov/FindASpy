@@ -3,5 +3,5 @@ let singUp = function () {
 };
 
 let goToRooms = function () {
-    window.location.href = 'rooms.html';
+    window.location.href = 'roomsList.html';
 };

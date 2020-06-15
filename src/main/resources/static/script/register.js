@@ -5,5 +5,5 @@ let doSignUp = function () {
 };
 let goToRooms = function () {
     // alert('called: hrefToRooms');
-    window.location.href = 'rooms.html';
+    window.location.href = 'roomsList.html';
 };

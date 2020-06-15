@@ -20,9 +20,7 @@
     <tbody>
     <tr th:each="room : ${rooms}">
         <td th:text="${room.value.getPlayers().get(0).getNickname()}"></td>
-<!--        <td><a th:href="@{'/' + ${room.key}}"><span th:text="${room.key}"></span></a></td>-->
         <td>
-<!--            <form action="#" th:action="@{/rooms/{path}(path=${room.key})}" method="get">-->
             <form action="#" th:action="@{/{roomId}/(roomId=${room.key})}" method="get">
                 <span th:text="${room.key}"></span>
                 <button type="submit">Join room</button>
