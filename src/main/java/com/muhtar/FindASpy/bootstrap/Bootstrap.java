@@ -47,7 +47,7 @@ public class Bootstrap implements CommandLineRunner {
                                 Player.builder().nickname("Jah").cookie(new Session.Cookie()).build(),
                                 Player.builder().nickname("TumaniYo").cookie(new Session.Cookie()).build()
                         ))
-                ).maxPlayersAmount(6).isPrivate(false).build()
+                ).maxPlayersAmount(6).isPrivate(true).build()
         );
 
         System.out.println(roomsPool.getAllRooms());

@@ -23,14 +23,16 @@ public class RoomController {
     @GetMapping("/roomsList")
     public String getAllRooms(Model model) {
         model.addAttribute("rooms", roomsPool.getAllNonPrivateRooms());
-        System.err.println("я в контроллере");
+        System.err.println("/roomsList Controller");
         return "rooms/roomsList";
     }
 
     @GetMapping("/{roomId}")
-    public String enterRoom(Model model, @PathVariable String roomId) {
+    public String enterRoom(Model model,
+                            @PathVariable String roomId) {
         model.addAttribute("roomId", roomId);
         model.addAttribute("room", roomsPool.getRoomByStringId(roomId));
+        System.err.println("/{roomId} Controller: " + roomId);
         return "rooms/room";
     }
 }
