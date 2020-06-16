@@ -1,5 +1,7 @@
 package com.muhtar.FindASpy.bootstrap;
 
+import com.muhtar.FindASpy.entity.Role;
+import com.muhtar.FindASpy.repo.RoleRepository;
 import com.muhtar.FindASpy.service.RoomsPool;
 import com.muhtar.FindASpy.model.Player;
 import com.muhtar.FindASpy.model.Room;
@@ -17,10 +19,22 @@ public class Bootstrap implements CommandLineRunner {
     @Autowired
     private RoomsPool roomsPool;
 
+    @Autowired
+    RoleRepository roleRepository;
+
 
     @Override
     public void run(String... args) throws Exception {
 
+        if (!roleRepository.findById(1L).isPresent()) {
+            roleRepository.save(Role.builder().name("ROLE_USER").build());
+        }
+        if (!roleRepository.findById(2L).isPresent()) {
+            roleRepository.save(Role.builder().name("ROLE_GUEST").build());
+        }
+        if (!roleRepository.findById(3L).isPresent()) {
+            roleRepository.save(Role.builder().name("ROLE_ADMIN").build());
+        }
         roomsPool.addRoom(
                 Room.builder().players(
                         new ArrayList<>(Arrays.asList(

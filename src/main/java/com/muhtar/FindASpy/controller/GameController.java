@@ -1,9 +1,11 @@
-package com.muhtar.FindASpy.contoller;
+package com.muhtar.FindASpy.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/player")
-public class PlayerController {
+@RequestMapping("/games")
+public class GameController {
+
+
 }

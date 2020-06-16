@@ -11,7 +11,7 @@
     <title>Rooms list</title>
 </head>
 <body>
-
+Session: <span th:text="${#request.getSession()}"></span>
 <p>Room link: <span th:text="${roomId}"></span></p>
 <p>Is room private: <span th:text="${room.isPrivate()}"></span></p>
 <table>

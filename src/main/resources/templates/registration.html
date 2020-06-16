@@ -1,0 +1,32 @@
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Registration page</title>
+</head>
+<body>
+
+    <div>
+        Register
+        <form action="#" th:action="@{/registration}" th:object="${userForm}" method="post">
+            <input type="text" name="username" th:name="username" placeholder="username">
+            <input type="password" name="password" th:name="password" placeholder="password">
+            <input type="password" name="passwordConfirm" th:name="passwordConfirm" placeholder="confirm password">
+            <button type="submit">Submit</button><button type="reset">Reset</button>
+        </form>
+        <br><br>
+<!--        Or you can enter game as guest-->
+<!--        <form action="#">-->
+<!--            <input type="text" name="guestName" placeholder="name">-->
+<!--            <button type="submit">Submit</button>-->
+<!--        </form>-->
+    </div>
+
+</body>
+</html>
