@@ -19,6 +19,16 @@
     <button type="submit">Logout</button>
 </form>
 
+<table>
+    <thead>
+    Active Users
+    </thead>
+    <tbody>
+    <tr th:each="username : ${activeUsers}">
+        <td th:text="${username}"></td>
+    </tr>
+    </tbody>
+</table>
 
 <table class="table table-striped table-hover table-bordered">
     <thead class="thead-dark">

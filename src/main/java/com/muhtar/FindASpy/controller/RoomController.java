@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/rooms")
@@ -30,25 +31,27 @@ public class RoomController {
 
     @GetMapping
     public String getAllRooms(Model model) {
-//        List<String> usersList = sessionRegistry.getAllPrincipals().stream()
-//                .filter(u -> !sessionRegistry.getAllSessions(u, false).isEmpty())
-//                .map(Object::toString)
-//                .collect(Collectors.toList());
+        List<String> usersList = sessionRegistry.getAllPrincipals().stream()
+                .filter(u -> !sessionRegistry.getAllSessions(u, false).isEmpty())
+                .map(Object::toString)
+                .collect(Collectors.toList());
 //        model.addAttribute("activeUsers", usersList);
-//        System.err.println(usersList);
-//        System.err.println(sessionRegistry.getAllPrincipals());
-////        System.err.println(sessionRegistry.getAllSessions(model.getAttribute("principal"), true));
+
+        System.err.println(usersList);
+        System.err.println(sessionRegistry.getAllPrincipals());
+//        System.err.println(sessionRegistry.getAllSessions(model.getAttribute("principal"), true));
 
         List<Object> principals = sessionRegistry.getAllPrincipals();
 
         List<String> usersNamesList = new ArrayList<>();
+        model.addAttribute("activeUsers", usersNamesList);
 
         for (Object principal: principals) {
             if (principal instanceof User) {
                 usersNamesList.add(((User) principal).getUsername());
             }
         }
-        System.err.println(usersNamesList);
+        System.err.println("Usernames: " + usersNamesList);
 
         model.addAttribute("rooms", roomsPool.getAllNonPrivateRooms());
         System.err.println("in rooms GetMapping");
