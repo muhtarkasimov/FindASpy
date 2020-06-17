@@ -12,21 +12,22 @@
 </head>
 <body>
 Session: <span th:text="${#request.getSession()}"></span>
+Creators name: <span th:text="${#request.getAttribute('roomCreatorName')}"></span>
 <p>Room link: <span th:text="${roomId}"></span></p>
 <p>Is room private: <span th:text="${room.isPrivate()}"></span></p>
 <table>
     <thead>
-    <th>Player name</th>
+    <th>Players</th>
     </thead>
     <tbody>
-    <tr th:each="player : ${room.getPlayers()}">
-        <td th:text="${player.nickname}"></td>
+    <tr th:each="user : ${room.getUsers()}">
+        <td th:text="${user.getUsername()}"></td>
     </tr>
     </tbody>
 </table>
 <br>
 
-<p>Players amount: <span th:text="${room.getPlayers().size()}"></span></p>
+<p>Players amount: <span th:text="${room.getUsers().size()}"></span></p>
 <p>Players places: <span th:text="${room.getMaxPlayersAmount()}"></span></p>
 
 <!--    This parameter can set only the creator of room, others can just watch-->

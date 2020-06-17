@@ -35,34 +35,34 @@ public class Bootstrap implements CommandLineRunner {
         if (!roleRepository.findById(3L).isPresent()) {
             roleRepository.save(Role.builder().name("ROLE_ADMIN").build());
         }
-        roomsPool.addRoom(
-                Room.builder().players(
-                        new ArrayList<>(Arrays.asList(
-                                Player.builder().nickname("Muha").cookie(new Session.Cookie()).build(),
-                                Player.builder().nickname("Kairat").cookie(new Session.Cookie()).build(),
-                                Player.builder().nickname("Azatbek").cookie(new Session.Cookie()).build()
-                                ))
-                ).maxPlayersAmount(5).isPrivate(false).build()
-        );
-        roomsPool.addRoom(
-                Room.builder().players(
-                        new ArrayList<>(Arrays.asList(
-                                Player.builder().nickname("Askhat").cookie(new Session.Cookie()).build(),
-                                Player.builder().nickname("Atai").cookie(new Session.Cookie()).build(),
-                                Player.builder().nickname("Kulanbek").cookie(new Session.Cookie()).build()
-                                ))
-                ).maxPlayersAmount(4).isPrivate(false).build()
-        );
-        roomsPool.addRoom(
-                Room.builder().players(
-                        new ArrayList<>(Arrays.asList(
-                                Player.builder().nickname("Tanir").cookie(new Session.Cookie()).build(),
-                                Player.builder().nickname("Xcho").cookie(new Session.Cookie()).build(),
-                                Player.builder().nickname("Jah").cookie(new Session.Cookie()).build(),
-                                Player.builder().nickname("TumaniYo").cookie(new Session.Cookie()).build()
-                        ))
-                ).maxPlayersAmount(6).isPrivate(true).build()
-        );
+//        roomsPool.addRoom(
+//                Room.builder().users(
+//                        new ArrayList<>(Arrays.asList(
+//                                Player.builder().nickname("Muha").cookie(new Session.Cookie()).build(),
+//                                Player.builder().nickname("Kairat").cookie(new Session.Cookie()).build(),
+//                                Player.builder().nickname("Azatbek").cookie(new Session.Cookie()).build()
+//                                ))
+//                ).maxPlayersAmount(5).isPrivate(false).build()
+//        );
+//        roomsPool.addRoom(
+//                Room.builder().players(
+//                        new ArrayList<>(Arrays.asList(
+//                                Player.builder().nickname("Askhat").cookie(new Session.Cookie()).build(),
+//                                Player.builder().nickname("Atai").cookie(new Session.Cookie()).build(),
+//                                Player.builder().nickname("Kulanbek").cookie(new Session.Cookie()).build()
+//                                ))
+//                ).maxPlayersAmount(4).isPrivate(false).build()
+//        );
+//        roomsPool.addRoom(
+//                Room.builder().players(
+//                        new ArrayList<>(Arrays.asList(
+//                                Player.builder().nickname("Tanir").cookie(new Session.Cookie()).build(),
+//                                Player.builder().nickname("Xcho").cookie(new Session.Cookie()).build(),
+//                                Player.builder().nickname("Jah").cookie(new Session.Cookie()).build(),
+//                                Player.builder().nickname("TumaniYo").cookie(new Session.Cookie()).build()
+//                        ))
+//                ).maxPlayersAmount(6).isPrivate(true).build()
+//        );
 
         System.out.println(roomsPool.getAllRooms());
         System.out.println(roomsPool.getAllNonPrivateRooms());

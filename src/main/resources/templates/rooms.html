@@ -2,34 +2,40 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Rooms list</title>
 </head>
 <body>
-<p>
-    Session: <span th:text="${#request.getSession()}"></span>
-</p>
-<p>
-    Username: <span th:text="${#request.getUserPrincipal().getName()}"></span>
-<!--    <input hidden="hidden" type="text" name="principal" th:value="${#request.getUserPrincipal()}" >-->
-</p>
-<form action="#" th:action="@{/logout}">
-    <button type="submit">Logout</button>
-</form>
+<div style="border: solid 2px black; margin: 2px; padding: 2px">
+    <p>
+        Session: <span th:text="${#request.getSession()}"></span>
+    </p>
+    <p>
+        Username: <span th:text="${#request.getUserPrincipal().getName()}"></span>
+        <!--    <input hidden="hidden" type="text" name="principal" th:value="${#request.getUserPrincipal()}" >-->
+    </p>
+    <form action="#" th:action="@{/logout}">
+        <button type="submit">Logout</button>
+    </form>
+</div>
 
-<table>
-    <thead>
-    Active Users
-    </thead>
-    <tbody>
-    <tr th:each="username : ${activeUsers}">
-        <td th:text="${username}"></td>
-    </tr>
-    </tbody>
-</table>
-
+<div style="border: solid 2px black; margin: 2px; padding: 2px">
+    <table>
+        <thead>
+        Active Users:
+        </thead>
+        <tbody>
+        <tr th:each="username : ${activeUsers}">
+            <td th:text="${username}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <table class="table table-striped table-hover table-bordered">
     <thead class="thead-dark">
     <th>Creator name</th>
@@ -40,19 +46,34 @@
 
     <tbody>
     <tr th:each="room : ${rooms}">
-        <td th:text="${room.value.getPlayers().get(0).getNickname()}"></td>
+        <td th:text="${room.value.getUsers().get(0).getUsername()}"></td>
         <td>
             <form action="#" th:action="@{/rooms/{roomId}/(roomId=${room.key})}" method="get">
                 <span th:text="${room.key}"></span>
                 <button type="submit">Join room</button>
             </form>
         </td>
-        <td th:text="${room.value.getPlayers().size()}"></td>
+        <td th:text="${room.value.getUsers().size()}"></td>
         <td th:text="${room.value.getMaxPlayersAmount()}"></td>
     </tr>
     </tbody>
 
-<!--    <a href=""-->
+    <div style="border: solid 2px black; margin: 2px; padding: 2px">
+        <form action="#" th:action="@{/rooms}" th:object="${roomForm}" method="post">
+            Players <select name="maxPlayersAmount" th:name="maxPlayersAmount">
+            <option value="10">10</option>
+            <option value="9">9</option>
+            <option value="8">8</option>
+            <option value="7">7</option>
+            <option value="6">6</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option selected value="3">3</option>
+        </select><br>
+            Private room <input type="checkbox" name="isPrivate" th:name="isPrivate">
+            <br><button type="submit">Create room</button>
+        </form>
+    </div>
 
 
 </table>

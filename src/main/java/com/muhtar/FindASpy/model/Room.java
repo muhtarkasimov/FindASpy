@@ -1,6 +1,7 @@
 package com.muhtar.FindASpy.model;
 
 
+import com.muhtar.FindASpy.entity.User;
 import lombok.*;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 @ToString
 public class Room {
 
-    List<Player> players;
+    List<User> users;
     int maxPlayersAmount;
     boolean isPrivate;
 
