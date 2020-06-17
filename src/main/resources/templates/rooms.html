@@ -8,12 +8,12 @@
     <title>Rooms list</title>
 </head>
 <body>
-
 <p>
     Session: <span th:text="${#request.getSession()}"></span>
 </p>
 <p>
     Username: <span th:text="${#request.getUserPrincipal().getName()}"></span>
+<!--    <input hidden="hidden" type="text" name="principal" th:value="${#request.getUserPrincipal()}" >-->
 </p>
 <form action="#" th:action="@{/logout}">
     <button type="submit">Logout</button>
@@ -24,8 +24,8 @@
     <thead class="thead-dark">
     <th>Creator name</th>
     <th>Room Link</th>
-    <th>Players </th>
-    <th>Places </th>
+    <th>Players</th>
+    <th>Places</th>
     </thead>
 
     <tbody>
