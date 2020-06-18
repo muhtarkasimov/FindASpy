@@ -32,7 +32,6 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
-    //FIXME create encoder bean
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

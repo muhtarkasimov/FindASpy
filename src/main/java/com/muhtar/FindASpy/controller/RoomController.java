@@ -65,11 +65,41 @@ public class RoomController {
 
     @GetMapping("/{roomId}")
     public String enterRoom(Model model,
-                            @PathVariable String roomId) {
+                            @PathVariable String roomId,
+                            HttpServletRequest request
+    ) {
+        Room room = roomsPool.getRoomByStringId(roomId);
+
+        // if room is full, redirects to rooms
+        if (room.getUsers().size() == room.getMaxPlayersAmount()) {
+            return "redirect:/rooms";
+        }
+        User user = userService.getByUsername(request.getUserPrincipal().getName());
+
+        //adding user to usersList of room if there is no player yet
+        if (!room.getUsers().contains(user)) {
+            room.getUsers().add(user);
+        }
+
         model.addAttribute("roomId", roomId);
-        model.addAttribute("room", roomsPool.getRoomByStringId(roomId));
+        model.addAttribute("room", room);
         System.err.println("/{roomId} Controller: " + roomId);
         return "room";
+    }
+
+    @GetMapping("/leave/{roomId}")
+    public String leaveRoom(Model model,
+                            @PathVariable String roomId,
+                            HttpServletRequest request
+    ) {
+        System.err.println("in room leave controller");
+        User user = userService.getByUsername(request.getUserPrincipal().getName());
+        Room room = roomsPool.getRoomByStringId(roomId);
+        room.getUsers().remove(user);
+        if (room.getUsers().isEmpty()) {
+            roomsPool.removeRoom(roomId);
+        }
+        return "redirect:/rooms";
     }
 
     @PostMapping
@@ -79,14 +109,10 @@ public class RoomController {
         System.err.println("User check: " + user);
 
         String roomLink = roomsPool.addRoom(
-                Room.builder().users(
-                        new ArrayList<>(Arrays.asList(
-                            user
-                        ))
-                )
+                Room.builder().users(new ArrayList<>())
                         .maxPlayersAmount(room.getMaxPlayersAmount())
-                 .isPrivate(room.isPrivate())
-                 .build()
+                        .isPrivate(room.isPrivate())
+                        .build()
         );
         System.err.println("Room link: " + roomLink);
         System.err.println("RoomsPool: " + roomsPool.getAllRooms());
