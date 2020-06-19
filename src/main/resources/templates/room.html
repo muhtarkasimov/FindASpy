@@ -2,7 +2,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-<!--    <META HTTP-EQUIV='Refresh' CONTENT='10; URL=room.html'>-->
+    <!--    <META HTTP-EQUIV='Refresh' CONTENT='10; URL=room.html'>-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
@@ -33,6 +33,7 @@
         <tbody>
         <tr th:each="user : ${room.getUsers()}">
             <td th:text="${user.getUsername()}"></td>
+            <input type="number" hidden="hidden" id="maxPlayersAmount" th:value="${room.getMaxPlayersAmount()}"></input>
         </tr>
         </tbody>
     </table>
@@ -41,20 +42,65 @@
     <p>Players amount: <span th:text="${room.getUsers().size()}"></span></p>
     <p>Players places: <span th:text="${room.getMaxPlayersAmount()}"></span></p>
 </div>
-<!--    This parameter can set only the creator of room, others can just watch-->
-<!--<form action="#" th:action="@{/game}" th:object="${game}" method="post">-->
-<!--    <p>Game time (Time to end game): <input type="number" th:field="*{gameTime}"/></p>-->
-<!--    <p>Amount of spies: <input type="number" th:field="*{spiesAmount}"/></p>-->
-<!--    <p><input type="submit" value="Submit"/><input type="reset" value="Reset"/></p>-->
-<!--</form>-->
-
+<div style="border: solid 2px black; margin: 2px; padding: 2px">
+    <!--    This parameter can set only the creator of room, others can just watch-->
+    <form action="#" th:action="@{/games}" th:object="${gameForm}" method="post">
+        Game Time: <select id="gameTimeSelector"  th:field="*{gameTime}">
+            <option value="5">5 mins</option>
+            <option value="10">10 mins</option>
+            <option value="15">15 mins</option>
+            <option value="20">20 mins</option>
+        </select>
+        Spies amount: <select name="spiesAmount" th:name="spiesAmount" id="spiesAmountSelector">
+            <option selected value="1">1</option>
+        </select>
+        <button type="submit">Start Game</button>
+    </form>
+</div>
 <!--<form action="#" th:action="@{/game}" method="post">-->
 <!--    <p>Game time (Time to end game): <input type="number" th:field="*{gameTime}"/></p>-->
 <!--    <p>Amount of spies: <input type="number" th:field="*{spiesAmount}"/></p>-->
 <!--    <p><input type="submit" value="Submit"/><input type="reset" value="Reset"/></p>-->
 <!--</form>-->
 <script>
-    setTimeout("location.reload(true);", 3000);
+    let refresh = function() {
+        let oldGameTime = document.getElementById("gameTimeSelector").value
+        let oldSelectedSpies = document.getElementById("spiesAmountSelector").value
+        location.reload();
+        for (i = 1; i < num/2; i++) {
+            if (i == oldSelectedSpies) {
+                // alert(oldSelectedSpies)
+                spiesHolder.innerHTML = "<option selected value=" + i + ">" + i + "</option>";
+            } else {
+                spiesHolder.innerHTML = "<option value=" + i + ">" + i + "</option>";
+            }
+        }
+        for (i = 5; i <= 20; i+=5) {
+            if (i == oldGameTime) {
+                // alert(oldGameTime)
+                gameTimeHolder.innerHTML = "<option selected value=" + i + ">" + i + "</option>";
+            } else {
+                gameTimeHolder.innerHTML = "<option value=" + i + ">" + i + "</option>";
+            }
+        }
+        // alert(oldGameTime)
+        document.getElementById("gameTimeSelector").value = oldGameTime
+        document.getElementById("spiesAmountSelector").value = oldSelectedSpies
+    }
+
+    // let oldGameTime = document.getElementById("gameTimeSelector").value
+    let num = document.getElementById("maxPlayersAmount").value;
+    let spiesHolder = document.getElementById("spiesAmountSelector");
+    let gameTimeHolder = document.getElementById("gameTimeSelector");
+
+    // alert(num/2);
+    // for (i = 1; i < num/2; i++) {
+    //     spiesHolder.innerHTML = "<option value=" + i + ">" + i + "</option>";
+    // }
+
+    setTimeout("refresh()", 5000);
+    // let playersAmount = window.getAttribute("room").getMaxPlayersAmount();
+
 </script>
 </body>
 </html>

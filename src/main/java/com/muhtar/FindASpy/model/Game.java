@@ -1,11 +1,13 @@
 package com.muhtar.FindASpy.model;
 
 
+import com.muhtar.FindASpy.entity.User;
 import com.muhtar.FindASpy.model.Player;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -19,18 +21,19 @@ import java.util.List;
 //@Table
 public class Game {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;                //for DB
 
-    List<Player> players;
-    List<Player> spies;
+    List<User> players;
+    List<User> spies;
     int spiesAmount;
 //    Chat chat;
     int gameTime;
     boolean isActive;
 
-    private void selectSpies() {}
+    public void selectSpies() {
+    }
 
     private void startGameTime() {}
 

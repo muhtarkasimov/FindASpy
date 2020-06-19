@@ -1,6 +1,7 @@
 package com.muhtar.FindASpy.controller;
 
 import com.muhtar.FindASpy.entity.User;
+import com.muhtar.FindASpy.model.Game;
 import com.muhtar.FindASpy.model.Player;
 import com.muhtar.FindASpy.model.Room;
 import com.muhtar.FindASpy.service.RoomsPool;
@@ -51,7 +52,7 @@ public class RoomController {
         model.addAttribute("roomForm", new Room());
         model.addAttribute("userForm", new User());
 
-        for (Object principal: principals) {
+        for (Object principal : principals) {
             if (principal instanceof User) {
                 usersNamesList.add(((User) principal).getUsername());
             }
@@ -69,11 +70,22 @@ public class RoomController {
                             HttpServletRequest request
     ) {
         Room room = roomsPool.getRoomByStringId(roomId);
+        System.err.println("ROOMS POOL CHECK: " + roomsPool.getAllRooms());
 
         // if room is full, redirects to rooms
-        if (room.getUsers().size() == room.getMaxPlayersAmount()) {
-            return "redirect:/rooms";
+        try {
+            if (room.getUsers() != null) {
+                if (room.getUsers().size() == room.getMaxPlayersAmount()) {
+                    return "redirect:/rooms";
+                }
+            }
+        } catch (Exception e) {
+            if (e instanceof NullPointerException) {
+                System.err.println("EXCEPTION!: roomcontroller.java:75-86: apperating NullPointer");
+            }
+            System.err.println("EXCEPTION!: roomcontroller.java:75-86: apperating EXCEPTION");
         }
+
         User user = userService.getByUsername(request.getUserPrincipal().getName());
 
         //adding user to usersList of room if there is no player yet
@@ -81,6 +93,20 @@ public class RoomController {
             room.getUsers().add(user);
         }
 
+        //**************************************
+        List<String> usersList = sessionRegistry.getAllPrincipals().stream()
+                .filter(u -> !sessionRegistry.getAllSessions(u, false).isEmpty())
+                .map(Object::toString)
+                .collect(Collectors.toList());
+
+        System.err.println("USERLIST CHECK: " + usersList);
+        System.err.println("USERS CHECK: " + room.getUsers());
+
+        room.getUsers().removeIf(u -> !usersList.contains(u.toString()));
+        //**************************************
+
+
+        model.addAttribute("gameForm", new Game());
         model.addAttribute("roomId", roomId);
         model.addAttribute("room", room);
         System.err.println("/{roomId} Controller: " + roomId);
@@ -103,8 +129,10 @@ public class RoomController {
     }
 
     @PostMapping
-    public String createRoom(@ModelAttribute Room room, Model model, HttpServletRequest request) {
-
+    public String createRoom(@ModelAttribute Room room,
+                             Model model,
+                             HttpServletRequest request
+    ) {
         User user = userService.getByUsername(request.getUserPrincipal().getName());
         System.err.println("User check: " + user);
 
