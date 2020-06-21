@@ -2,29 +2,29 @@ package com.muhtar.FindASpy.controller;
 
 import com.google.gson.Gson;
 import com.muhtar.FindASpy.entity.User;
+import com.muhtar.FindASpy.model.Room;
+import com.muhtar.FindASpy.service.RoomsPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/online")
-public class ActiveUsersController {
+@RequestMapping("/refresh")
+public class RefreshController {
 
     @Autowired
     SessionRegistry sessionRegistry;
 
-    @GetMapping
-    @CrossOrigin
+    @Autowired
+    RoomsPool roomsPool;
+
+    @GetMapping("/rooms")
     @ResponseBody
-    public String getOnlineUsers() {
-        System.err.println("GET ONLINE USERS called");
+    public String getOnlineUsersAndRooms() {
         //Вытаскиваем из РеестраСессий только активные сессии
         List<User> usersList = sessionRegistry.getAllPrincipals().stream()
                 .filter(u -> !sessionRegistry.getAllSessions(u, false).isEmpty())
@@ -35,5 +35,20 @@ public class ActiveUsersController {
         // возможно стоит ему потом сделать модельку только с username'ом
 
         return new Gson().toJson(usersList);
+    }
+
+    @GetMapping("/{roomId}")
+    @ResponseBody
+    public String getOnlineUsersByRoomId(@PathVariable String roomId) {
+        System.err.println("CHECK 1.0: " + roomId);
+        Room currentRoom = roomsPool.getRoomByStringId(roomId);
+        return new Gson().toJson(currentRoom.getUsers());
+    }
+
+    @GetMapping("/roomsList")
+    @ResponseBody
+    public String getRooms() {
+        System.err.println("CHECK 2.0");
+        return new Gson().toJson(roomsPool.getAllNonPrivateRooms());
     }
 }
