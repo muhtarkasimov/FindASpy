@@ -15,6 +15,7 @@
     <div>
         Register
         <form action="#" th:action="@{/registration}" th:object="${userForm}" method="post">
+            <i>Length: 2-16 symbols, only 'a-z', 'A-Z', '0-9', cannot start with integers</i><br>
             <input type="text" name="username" th:name="username" placeholder="username">
             <input type="password" name="password" th:name="password" placeholder="password">
             <input type="password" name="passwordConfirm" th:name="passwordConfirm" placeholder="confirm password">
