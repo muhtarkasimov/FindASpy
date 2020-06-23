@@ -13,7 +13,7 @@ import java.util.Map;
 public class RoomsPool {
 
     @Autowired
-    SymbolGenerator symbolGenerator;
+    private SymbolGenerator symbolGenerator;
 
     private static Map<String, Room> map;
     int generatingStringLength = 10;
@@ -34,6 +34,10 @@ public class RoomsPool {
 
     public Room getRoomByStringId(String id) {
         return map.get(id);
+    }
+
+    public boolean containsKey(String key) {
+        return map.containsKey(key);
     }
 
     public Map<String, Room> getAllRooms() {

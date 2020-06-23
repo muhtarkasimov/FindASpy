@@ -14,7 +14,7 @@
 <body>
 <div style="border: solid 2px black; margin: 2px; padding: 2px">
     Session: <span th:text="${#request.getSession()}"></span>
-    <p>Room link: <span th:text="${roomId}"></span></p>
+    <p>Room link: <span id="roomId" th:text="${roomId}"></span></p>
     <p>Is room private: <span th:text="${room.isPrivate()}"></span></p>
 </div>
 
@@ -26,20 +26,15 @@
 </div>
 
 <div style="border: solid 2px black; margin: 2px; padding: 2px">
-    <table>
+    <table id="activeUsers">
         <thead>
         <th>Players:</th>
         </thead>
-        <tbody>
-        <tr th:each="user : ${room.getUsers()}">
-            <td th:text="${user.getUsername()}"></td>
-            <input type="number" hidden="hidden" id="maxPlayersAmount" th:value="${room.getMaxPlayersAmount()}"></input>
-        </tr>
-        </tbody>
     </table>
+    <input type="number" hidden="hidden" id="maxPlayersAmount" th:value="${room.getMaxPlayersAmount()}">
 </div>
 <div style="border: solid 2px black; margin: 2px; padding: 2px">
-    <p>Players amount: <span th:text="${room.getUsers().size()}"></span></p>
+    <p>Players amount: <span id="playersAmount" th:text="${room.getUsers().size()}"></span></p>
     <p>Players places: <span th:text="${room.getMaxPlayersAmount()}"></span></p>
 </div>
 <div style="border: solid 2px black; margin: 2px; padding: 2px">
@@ -51,56 +46,14 @@
             <option value="15">15 mins</option>
             <option value="20">20 mins</option>
         </select>
+        <input hidden="hidden" type="text" name="roomId" th:name="roomId" th:value="${roomId}">
+        <input th:type="Object" hidden="hidden" name="players" th:name="players" th:value="${room.getUsers()}">
         Spies amount: <select name="spiesAmount" th:name="spiesAmount" id="spiesAmountSelector">
             <option selected value="1">1</option>
         </select>
         <button type="submit">Start Game</button>
     </form>
 </div>
-<!--<form action="#" th:action="@{/game}" method="post">-->
-<!--    <p>Game time (Time to end game): <input type="number" th:field="*{gameTime}"/></p>-->
-<!--    <p>Amount of spies: <input type="number" th:field="*{spiesAmount}"/></p>-->
-<!--    <p><input type="submit" value="Submit"/><input type="reset" value="Reset"/></p>-->
-<!--</form>-->
-<script>
-    let refresh = function() {
-        let oldGameTime = document.getElementById("gameTimeSelector").value
-        let oldSelectedSpies = document.getElementById("spiesAmountSelector").value
-        location.reload();
-        for (i = 1; i < num/2; i++) {
-            if (i == oldSelectedSpies) {
-                // alert(oldSelectedSpies)
-                spiesHolder.innerHTML = "<option selected value=" + i + ">" + i + "</option>";
-            } else {
-                spiesHolder.innerHTML = "<option value=" + i + ">" + i + "</option>";
-            }
-        }
-        for (i = 5; i <= 20; i+=5) {
-            if (i == oldGameTime) {
-                // alert(oldGameTime)
-                gameTimeHolder.innerHTML = "<option selected value=" + i + ">" + i + "</option>";
-            } else {
-                gameTimeHolder.innerHTML = "<option value=" + i + ">" + i + "</option>";
-            }
-        }
-        // alert(oldGameTime)
-        document.getElementById("gameTimeSelector").value = oldGameTime
-        document.getElementById("spiesAmountSelector").value = oldSelectedSpies
-    }
-
-    // let oldGameTime = document.getElementById("gameTimeSelector").value
-    let num = document.getElementById("maxPlayersAmount").value;
-    let spiesHolder = document.getElementById("spiesAmountSelector");
-    let gameTimeHolder = document.getElementById("gameTimeSelector");
-
-    // alert(num/2);
-    // for (i = 1; i < num/2; i++) {
-    //     spiesHolder.innerHTML = "<option value=" + i + ">" + i + "</option>";
-    // }
-
-    setTimeout("refresh()", 5000);
-    // let playersAmount = window.getAttribute("room").getMaxPlayersAmount();
-
-</script>
+<script src="../onlineUsersInRoom.js" type="application/javascript"></script>
 </body>
 </html>
