@@ -1,6 +1,5 @@
 let prefix = "http://localhost:8080/"
 let roomId = document.getElementById("roomId").innerText
-alert(roomId)
 
 window.setInterval('getOnlineUsersByRoomId()', 1000)
 

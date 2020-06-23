@@ -53,11 +53,12 @@ public class RoomController {
         //adding user to usersList of room if there is no this player yet
         User user = userService.getByUsername(request.getUserPrincipal().getName());
         if (!(room.getUsers().contains(user))) {
-            room.addUser(user);
+            room.getUsers().add(user);
         }
 
         // if room is full, redirects to rooms
-        if (room.getUsers().size() == room.getMaxPlayersAmount()) {
+        if (room.getUsers().size() > room.getMaxPlayersAmount()) {
+            room.getUsers().remove(room.getUsers().size()-1);
             return "redirect:/rooms";
         }
 
@@ -105,6 +106,8 @@ public class RoomController {
         ArrayList<User> users = new ArrayList<>();
         users.add(user);
         System.err.println("User check: " + user);
+
+        System.err.println("ISPRIVATE CHECK: " + room.isPrivate());
 
         String roomLink = roomsPool.addRoom(
                 Room.builder()

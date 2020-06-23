@@ -21,8 +21,4 @@ public class Room {
     int maxPlayersAmount;
     boolean isPrivate;
 
-    public boolean addUser(User user) {
-        return users.add(user);
-    }
-
 }
