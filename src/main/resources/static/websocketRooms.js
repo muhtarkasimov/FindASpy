@@ -27,7 +27,12 @@ function sendMessage() {
 
 function displayMessage(message) {
     console.log('Messaga: ' + message)
-    $("#messagesBox").append("<tr><td>" + message.username + "</td> <td>" + message.text + "</td></tr>");
+    var today = new Date();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    $("#messagesBox").append("<tr><td><b>" + message.username + " </b><span style='font-size: 12px; font-style: italic'>"  + time +  "</span> :</td> <td>" + message.text + "</td></tr>");
+    // $('#messagesBox').scrollTop($('#messagesBox').scrollHeight);
+    var elem = $("#messageBoxScroll")
+    elem.scrollTop = elem.scrollHeight;
 }
 
 $(function () {
