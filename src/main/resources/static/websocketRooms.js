@@ -30,9 +30,15 @@ function displayMessage(message) {
     var today = new Date();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     $("#messagesBox").append("<tr><td><b>" + message.username + " </b><span style='font-size: 12px; font-style: italic'>"  + time +  "</span> :</td> <td>" + message.text + "</td></tr>");
-    // $('#messagesBox').scrollTop($('#messagesBox').scrollHeight);
+    scrollDiv()
+}
+
+function scrollDiv() {
     var elem = $("#messageBoxScroll")
-    elem.scrollTop = elem.scrollHeight;
+    /*******
+     * This is костыль, потому, что elem.scrollHeight не отрабатывал.
+     *******/
+    elem.scrollTop(9999999999999)
 }
 
 $(function () {
