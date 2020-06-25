@@ -13,13 +13,13 @@
 </head>
 <body>
 <div style="border: solid 2px black; margin: 2px; padding: 2px">
-    Session: <span th:text="${#request.getSession()}"></span>
-    <p>Room link: <span id="roomId" th:text="${roomId}"></span></p>
-    <p>Is room private: <span th:text="${room.isPrivate()}"></span></p>
+    <b>Session: </b><span th:text="${#request.getSession()}"></span>
+    <p><b>Room link: </b><span id="roomId" th:text="${roomId}"></span></p>
+    <p><b>Is room private: </b><span th:text="${room.isPrivate()}"></span></p>
 </div>
 
 <div style="border: solid 2px black; margin: 2px; padding: 2px">
-    Username: <span th:text="${#request.getUserPrincipal().getName()}"></span>
+    <b>Username: </b><span th:text="${#request.getUserPrincipal().getName()}"></span>
     <form action="#" th:action="@{/rooms/leave/{room_Id}(room_Id=${roomId})}" method="get">
         <button type="submit">Leave room</button>
     </form>
@@ -54,6 +54,6 @@
         <button type="submit">Start Game</button>
     </form>
 </div>
-<script src="../onlineUsersInRoom.js" type="application/javascript"></script>
+<script src="../room.js" type="application/javascript"></script>
 </body>
 </html>

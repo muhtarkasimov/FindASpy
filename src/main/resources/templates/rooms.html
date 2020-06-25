@@ -14,63 +14,83 @@
             integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
             crossorigin="anonymous"></script>
     <title>Rooms list</title>
-    <script src="onlineUsers.js" type="application/javascript"></script>
+    <!--    WEBSOCKET DEPENDS.-->
+    <script src="/webjars/jquery/3.1.1-1/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/1.0.2/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/2.3.3/stomp.min.js"></script>
 </head>
 <body>
-<div style="border: solid 2px black; margin: 2px; padding: 2px">
-    <p>
-        Session: <span th:text="${#request.getSession()}"></span>
-    </p>
-    <p>
-        Username: <span th:text="${#request.getUserPrincipal().getName()}"></span>
-        <!--    <input hidden="hidden" type="text" name="principal" th:value="${#request.getUserPrincipal()}" >-->
-    </p>
-    <form action="#" th:action="@{/logout}">
-        <button type="submit">Logout</button>
-    </form>
-</div>
+<div style="display: inline-block">
+    <div style="border: solid 2px black; margin: 2px; padding: 2px">
+        <p>
+            <b>Session: </b><span th:text="${#request.getSession()}"></span>
+        </p>
+        <p>
+            <b>Username: </b><span id="username" th:text="${#request.getUserPrincipal().getName()}"></span>
+            <!--    <input hidden="hidden" type="text" name="principal" th:value="${#request.getUserPrincipal()}" >-->
+        </p>
+        <form action="#" th:action="@{/logout}">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
 
-<div style="border: solid 2px black; margin: 2px; padding: 2px">
-    <table id="activeUsers">
-        <thead>Active users:</thead>
-        <tbody>
-        <tr>
-            <td></td>
-        </tr>
-        </tbody>
+    <div style="border: solid 2px black; margin: 2px; padding: 2px">
+        <table id="activeUsers">
+            <thead><b>Active users:</b></thead>
+            <tbody>
+            <tr>
+                <td></td>
+            </tr>
+            </tbody>
 
+        </table>
+    </div>
+    <div style="border: solid 2px black; margin: 2px; padding: 2px">
+        <b>Create Room:</b>
+        <form action="#" th:action="@{/rooms}" th:object="${roomForm}" method="post">
+            Players amount <select th:field="*{maxPlayersAmount}">
+            <option value="10">10</option>
+            <option value="9">9</option>
+            <option value="8">8</option>
+            <option value="7">7</option>
+            <option value="6">6</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option selected value="3">3</option>
+        </select><br>
+            Private room <input type="checkbox" th:field="*{private}">
+            <br>
+            <button type="submit">Create room</button>
+        </form>
+    </div>
+    <table id="roomsList" class="table table-striped table-hover table-bordered">
+        <thead class="thead-dark">
+        <th>Leader name</th>
+        <th>Room Link</th>
+        <th>Players</th>
+        <th>Places</th>
+        </thead>
     </table>
 </div>
-<div style="border: solid 2px black; margin: 2px; padding: 2px">
-    <form action="#" th:action="@{/rooms}" th:object="${roomForm}" method="post">
-        Players <select th:field="*{maxPlayersAmount}">
-        <option value="10">10</option>
-        <option value="9">9</option>
-        <option value="8">8</option>
-        <option value="7">7</option>
-        <option value="6">6</option>
-        <option value="5">5</option>
-        <option value="4">4</option>
-        <option selected value="3">3</option>
-    </select><br>
-        Private room <input type="checkbox" th:field="*{private}">
-        <br>
-        <button type="submit">Create room</button>
-    </form>
+<div id="chat" style="display: inline-block">
+    <table>
+        <thead>
+        <th>Username</th>
+        <th>Message</th>
+        </thead>
+        <tbody id="messagesBox">
+
+        </tbody>
+    </table>
+    <div>
+        <form action="#">
+            <input type="text" id="messageText">
+            <button id="sendMessage" type="submit">Send</button>
+        </form>
+    </div>
 </div>
-<table id="roomsList" class="table table-striped table-hover table-bordered">
-    <thead class="thead-dark">
-    <th>Leader name</th>
-    <th>Room Link</th>
-    <th>Players</th>
-    <th>Places</th>
-    </thead>
-</table>
-
-
-<script>
-
-</script>
+<script src="rooms.js" type="application/javascript"></script>
+<script src="websocketRooms.js" type="application/javascript"></script>
 
 </body>
 </html>
