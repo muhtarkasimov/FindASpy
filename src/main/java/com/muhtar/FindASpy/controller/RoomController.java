@@ -33,7 +33,7 @@ public class RoomController {
     @Autowired
     UserService userService;
 
-    @GetMapping
+    @GetMapping()
     public String getAllRooms(Model model) {
         model.addAttribute("roomForm", new Room());
 
@@ -59,7 +59,7 @@ public class RoomController {
         // if room is full, redirects to rooms
         if (room.getUsers().size() > room.getMaxPlayersAmount()) {
             room.getUsers().remove(room.getUsers().size()-1);
-            return "redirect:/rooms";
+            return "redirect:/rooms?#";
         }
 
         //**************************************
@@ -94,7 +94,7 @@ public class RoomController {
         if (room.getUsers().isEmpty()) {
             roomsPool.removeRoom(roomId);
         }
-        return "redirect:/rooms";
+        return "redirect:/rooms?#";
     }
 
     @PostMapping
@@ -118,6 +118,9 @@ public class RoomController {
         );
         System.err.println("Room link: " + roomLink);
         System.err.println("RoomsPool: " + roomsPool.getAllRooms());
-        return "redirect:/rooms/" + roomLink;
+        /**
+         * Добавляю ?# , чтобы страница не перезагружалась при попытке отправить сообщение
+         **/
+        return "redirect:/rooms/" + roomLink + "?#";
     }
 }
