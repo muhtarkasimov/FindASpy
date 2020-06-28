@@ -14,6 +14,12 @@
     <script src="/webjars/jquery/3.1.1-1/jquery.min.js"></script>
     <script src="/webjars/sockjs-client/1.0.2/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/2.3.3/stomp.min.js"></script>
+    <style>
+        .disabled{
+            pointer-events: none;
+            opacity: 0.4;
+        }
+    </style>
 </head>
 <body>
 <div style="display: inline-block; ">
@@ -42,7 +48,7 @@
         <p>Players amount: <span id="playersAmount" th:text="${room.getUsers().size()}"></span></p>
         <p>Players places: <span th:text="${room.getMaxPlayersAmount()}"></span></p>
     </div>
-    <div style="border: solid 2px black; margin: 2px; padding: 2px">
+    <div id="gamePref" style="border: solid 2px black; margin: 2px; padding: 2px">
         <!--    This parameter can set only the creator of room, others can just watch-->
         <form action="#" th:action="@{/games}" th:object="${gameForm}" method="post">
             Game Time: <select id="gameTimeSelector" th:field="*{gameTime}">
