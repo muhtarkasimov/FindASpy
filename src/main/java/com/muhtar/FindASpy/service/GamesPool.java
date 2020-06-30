@@ -23,6 +23,11 @@ public class GamesPool {
         map = new HashMap<>();
     }
 
+    public String addGame(String gameId, Game game) {
+        map.put(gameId, game);
+        return gameId;
+    }
+
     public String addGame(Game game) {
         String generatedString = symbolGenerator.generateString(generatingStringLength);
         while (map.containsKey(generatedString)) {

@@ -57,9 +57,9 @@
             <option value="15">15 mins</option>
             <option value="20">20 mins</option>
         </select>
-            <input hidden="hidden" type="text" name="roomId" th:name="roomId" th:value="${roomId}">
-            <input th:type="Object" hidden="hidden" name="players" th:name="players" th:value="${room.getUsers()}">
-            Spies amount: <select name="spiesAmount" th:name="spiesAmount" id="spiesAmountSelector">
+        <input hidden="hidden" type="text" name="roomId" th:name="roomId" th:value="${roomId}">
+        <input hidden="hidden" name="roomId" th:name="roomId" th:data="${roomId}">
+        Spies amount: <select name="spiesAmount" th:name="spiesAmount" id="spiesAmountSelector">
             <option selected value="1">1</option>
         </select>
             <button type="submit">Start Game</button>
