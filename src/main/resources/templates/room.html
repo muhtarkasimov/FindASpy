@@ -1,0 +1,94 @@
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--    <META HTTP-EQUIV='Refresh' CONTENT='10; URL=room.html'>-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Rooms list</title>
+    <!--    WEBSOCKET DEPENDS.-->
+    <script src="/webjars/jquery/3.1.1-1/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/1.0.2/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/2.3.3/stomp.min.js"></script>
+    <style>
+        .disabled{
+            pointer-events: none;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+<div style="display: inline-block; ">
+    <div style="border: solid 2px black; margin: 2px; padding: 2px">
+        <b>Session: </b><span th:text="${#request.getSession()}"></span>
+        <p><b>Room link: </b><span id="roomId" th:text="${roomId}"></span></p>
+        <p><b>Is room private: </b><span th:text="${room.isPrivate()}"></span></p>
+    </div>
+
+    <div style="border: solid 2px black; margin: 2px; padding: 2px">
+        <b>Username: </b><span id="username" th:text="${#request.getUserPrincipal().getName()}"></span>
+        <form action="#" th:action="@{/rooms/leave/{room_Id}(room_Id=${roomId})}" method="get">
+            <button type="submit">Leave room</button>
+        </form>
+    </div>
+
+    <div style="border: solid 2px black; margin: 2px; padding: 2px">
+        <table id="activeUsers">
+            <thead>
+            <th>Players:</th>
+            </thead>
+        </table>
+        <input type="number" hidden="hidden" id="maxPlayersAmount" th:value="${room.getMaxPlayersAmount()}">
+    </div>
+    <div style="border: solid 2px black; margin: 2px; padding: 2px">
+        <p>Players amount: <span id="playersAmount" th:text="${room.getUsers().size()}"></span></p>
+        <p>Players places: <span th:text="${room.getMaxPlayersAmount()}"></span></p>
+    </div>
+    <div id="gamePref" style="border: solid 2px black; margin: 2px; padding: 2px">
+        <!--    This parameter can set only the creator of room, others can just watch-->
+        <form action="#" th:action="@{/games}" th:object="${gameForm}" method="post">
+            Game Time: <select id="gameTimeSelector" th:field="*{gameTime}">
+            <option value="5">5 mins</option>
+            <option value="10">10 mins</option>
+            <option value="15">15 mins</option>
+            <option value="20">20 mins</option>
+        </select>
+            <input hidden="hidden" type="text" name="roomId" th:name="roomId" th:value="${roomId}">
+            <input th:type="Object" hidden="hidden" name="players" th:name="players" th:value="${room.getUsers()}">
+            Spies amount: <select name="spiesAmount" th:name="spiesAmount" id="spiesAmountSelector">
+            <option selected value="1">1</option>
+        </select>
+            <button type="submit">Start Game</button>
+        </form>
+    </div>
+</div>
+
+<div id="chat" style="display: inline-block; ">
+    <div id="messageBoxScroll" style="overflow:scroll; height:400px; border: 1px solid black">
+        <table>
+            <thead>
+            <th>Username</th>
+            <th>Message</th>
+            </thead>
+            <tbody id="messagesBox">
+
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <form action="#">
+            <input type="text" id="messageText">
+            <button id="sendMessage" type="submit">Send</button>
+        </form>
+    </div>
+</div>
+
+<!-- '../' добавлен чтобы исправить возникновение неправильного запроса 'http://localhost:8080/rooms/websocketRoom.js'-->
+<script src="../room.js" type="application/javascript"></script>
+<script src="../websocketRoom.js" type="application/javascript"></script>
+</body>
+</html>
