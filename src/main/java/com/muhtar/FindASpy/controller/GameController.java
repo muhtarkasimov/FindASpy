@@ -36,8 +36,9 @@ public class GameController {
                            @PathVariable String gameId,
                            HttpServletRequest request
     ) {
-        model.addAttribute("game", (Game)model.getAttribute("game"));
-        model.addAttribute("gameId", gameId);
+        Game game = gamesPool.getGameByStringId(gameId);
+        model.addAttribute("game", game);
+
 
         return "gameRoom";
     }
@@ -51,6 +52,7 @@ public class GameController {
         System.err.println("RoomId : " + roomId);
         System.err.println("Players : " + players);
         Game newGame = Game.builder()
+                .gameId(roomId)
                 .players(players)
                 .gameTime(game.getGameTime())
                 .isActive(true)
@@ -66,10 +68,13 @@ public class GameController {
         // ...
 
 //        newGame.startGame();
-        model.addAttribute("game", newGame);
-        model.addAttribute("gameId", gameId);
 
-        return "redirect:/games/" + gameId;
+        System.err.println(newGame);
+
+        /**
+         * ?# - нужно для работы чата
+         **/
+        return "redirect:/games/" + gameId + "?#";
     }
 
 

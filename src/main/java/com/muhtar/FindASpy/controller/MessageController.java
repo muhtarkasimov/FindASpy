@@ -13,7 +13,6 @@ public class MessageController {
     @MessageMapping("/hall")
     @SendTo("/listener/hall")
     public Message messageToRooms(Message message) throws Exception {
-        System.err.println("IN HALL CONTROLLER: " + message);
 //        return new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
         return message;
     }
@@ -29,8 +28,13 @@ public class MessageController {
     @MessageMapping("/rooms")
     @SendTo("/listener/rooms")
     public Message messageToRoom(Message message) throws Exception {
-        System.err.println("IN ROOMS CONTROLLER MESSAGE-> (" + message + ")");
         return message;
     }
 
+    @MessageMapping("/games")
+    @SendTo("/listener/games")
+    public Message messageToGame(Message message) throws Exception {
+        System.err.println("IN ROOMS CONTROLLER MESSAGE-> (" + message + ")");
+        return message;
+    }
 }
