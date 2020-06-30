@@ -1,7 +1,9 @@
 let prefix = "http://localhost:8080/"
 let roomId = document.getElementById("roomId").innerText
+var gamePref = document.getElementById('gamePref');
+let username = document.getElementById('username').innerText;
+window.setInterval('getOnlineUsersByRoomId()', 1000);
 
-window.setInterval('getOnlineUsersByRoomId()', 1000)
 
 const getOnlineUsersByRoomId = async () => {
     const response = await fetch(prefix + 'refresh/' + roomId);
@@ -18,4 +20,8 @@ const getOnlineUsersByRoomId = async () => {
     let end = '</tr></tbody>'
     document.getElementById("playersAmount").innerHTML = myJson.length
     document.getElementById("activeUsers").innerHTML = output + end
+
+    if (username !== myJson[0].username.toString()) {
+        gamePref.classList.add("disabled");
+    }
 };

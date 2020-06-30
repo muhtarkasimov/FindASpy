@@ -40,7 +40,6 @@ public class RefreshController {
     @GetMapping("/{roomId}")
     @ResponseBody
     public String getOnlineUsersByRoomId(@PathVariable String roomId) {
-        System.err.println("CHECK 1.0: " + roomId);
         Room currentRoom = roomsPool.getRoomByStringId(roomId);
         return new Gson().toJson(currentRoom.getUsers());
     }
@@ -48,7 +47,6 @@ public class RefreshController {
     @GetMapping("/roomsList")
     @ResponseBody
     public String getRooms() {
-        System.err.println("CHECK 2.0");
         return new Gson().toJson(roomsPool.getAllNonPrivateRooms());
     }
 }
