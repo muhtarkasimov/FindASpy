@@ -28,8 +28,9 @@ public class Game {
 //    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;                //for DB
 
-    List<User> players;
-    List<User> spies;
+    ArrayList<User> players;
+    ArrayList<User> spies;
+    ArrayList<String> spiesNames;
     String gameId;
     int spiesAmount;
     String word;
@@ -38,11 +39,16 @@ public class Game {
     boolean isActive;
 
     public void selectSpies() {
+        if (spies == null) {
+            this.spies = new ArrayList<>();
+            this.spiesNames = new ArrayList<>();
+        }
 
         for (int i = 0; i < spiesAmount; i++) {
             User playerToAdd = players.get(random.nextInt(players.size()));
             if (!spies.contains(playerToAdd)) {
                 spies.add(playerToAdd);
+                spiesNames.add(playerToAdd.getUsername());
             }
         }
     }
